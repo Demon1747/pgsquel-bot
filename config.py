@@ -1,1 +1,2 @@
-BOT_TOKEN = "7020187273:AAHcv4iTR2AoifBcUYU1mpiIgNJDxz263BM"
+BOT_TOKEN = ""
+pics_root = ""
