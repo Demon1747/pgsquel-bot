@@ -1,15 +1,45 @@
+import os, random, re
+import config
+
 from aiogram import Router
-from aiogram.types import Message
+from aiogram.types import Message, FSInputFile
 from aiogram.filters import Command
 
 router = Router()
 
+words = [
+    "sq.*",
+    ".*ql",
+    "postgre.*",
+    "mong.*",
+    "sequel.*",
+    "select",
+    "where",
+    "from",
+    "update",
+    "delete",
+    "drop",
+    "join",
+    "create?",
+    "insert",
+    ".*db",
+    "databas.*",
+    "data bas.*",
+    "э?ску[эе]?л.*",
+    "сик.?в?[эе]л.*",
+    "эс к.?ю эл.*",
+    "постгр.*",
+    "монг.*",
+    "баз.* данных",
+    ".*бд",
+    "бд.*",
+    "гриб.*",
+]
 
-@router.message(Command("start"))
-async def start_handler(msg: Message):
-    await msg.answer("Привет! Я помогу тебе узнать твою ориентацию!")
-
+regex = re.compile("|".join(["^(?:\S*\s)*" + x + "(:?\s\S*)*$" for x in words]))
 
 @router.message()
 async def message_handler(msg: Message):
-    await msg.answer(f"{msg.from_user.first_name}, ты пидор!")
+    if regex.match(msg.text.lower()):
+        picture = FSInputFile(config.pics_root + random.choice(os.listdir(config.pics_root)))
+        await msg.answer_photo(photo=picture)
