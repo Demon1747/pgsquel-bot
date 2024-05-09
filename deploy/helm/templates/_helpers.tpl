@@ -49,10 +49,3 @@ Selector labels
 app.kubernetes.io/name: {{ include "helm.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
-
-{{/*
-Random WebDAV credentials
-*/}}
-{{- define "helm.davPassword" -}}
-{{- randAlphaNum 32 | nospace -}}
-{{- end -}}

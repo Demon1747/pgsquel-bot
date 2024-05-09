@@ -6,16 +6,17 @@ replicaCount: 1
 
 secrets:
   tgbotToken: ""
+  davPassword: ""
 
 persistence:
   amount: 1Gi
   storageClassName: ""
 
 image:
-  repository: nginx
-  pullPolicy: IfNotPresent
+  repository: "nginx"
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -23,8 +24,8 @@ fullnameOverride: ""
 
 podAnnotations: {}
 
-podSecurityContext: {}
-  # fsGroup: 2000
+podSecurityContext:
+  fsGroup: 65534
 
 securityContext:
   capabilities:
@@ -48,7 +49,7 @@ resources: {}
 
 service:
   type: ClusterIP
-  port: 7000
+  port: 8080
 
 ingress:
   enabled: false

@@ -46,8 +46,6 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
         - name: sidecar-webdav
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "ionelmc/webdav:latest"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -58,11 +56,19 @@ spec:
             httpGet:
               path: /
               port: http
+              httpHeaders:
+                - name: Authorization
+                  value: "Basic {{ printf "%s:%s" "admin" (( .Values.secrets.davPassword )) | b64enc }}"
           readinessProbe:
             httpGet:
               path: /
               port: http
+              httpHeaders:
+                - name: Authorization
+                  value: "Basic {{ printf "%s:%s" "admin" (( .Values.secrets.davPassword )) | b64enc }}"
           env:
+          - name: UID
+            value: "0"
           - name: WEBDAV_USERNAME
             value: admin
           - name: WEBDAV_PASSWORD
