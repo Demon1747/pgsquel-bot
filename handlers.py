@@ -41,5 +41,8 @@ regex = re.compile("|".join(["^(?:\S*\s)*" + x + "(:?\s\S*)*$" for x in words]))
 @router.message()
 async def message_handler(msg: Message):
     if regex.match(msg.text.lower()):
-        picture = FSInputFile(config.pics_root + random.choice(os.listdir(config.pics_root)))
+        pics = [os.path.join(config.pics_root, x) for x in os.listdir(config.pics_root)]
+        pics = [x for x in filter(lambda x: os.path.isfile(x), pics)]
+        pic_path = random.choice(pics)
+        picture = FSInputFile(pic_path)
         await msg.answer_photo(photo=picture)
