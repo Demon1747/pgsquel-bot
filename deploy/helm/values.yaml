@@ -13,10 +13,10 @@ persistence:
   storageClassName: ""
 
 image:
-  repository: "nginx"
+  repository: "quay.zinstack.ru/demon1747/pgsquel-bot"
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "master"
 
 imagePullSecrets: []
 nameOverride: ""
